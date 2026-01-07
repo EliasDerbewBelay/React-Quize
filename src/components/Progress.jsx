@@ -1,29 +1,23 @@
-export default function Progress({
-  index,
-  numQuestions,
-  points,
-  maxPossiblePoints,
-  answer,
-}) {
+// Add responsive classes to your Progress component
+export default function Progress({ index, numQuestions, points, maxPossiblePoints, answer }) {
   return (
-    <header className="">
-      <progress
-        className="w-full h-2 [&::-webkit-progress-bar]:bg-gray-200 
-         [&::-webkit-progress-value]:bg-blue-500 
-         [&::-moz-progress-bar]:bg-blue-500 rounded overflow-hidden"
-        max={numQuestions}
-        value={index + Number(answer !== null)}
-      />
-
-      <div className="flex justify-between ml-[10px] mr-[10px]">
-        <p>
-          Question <strong>{index + 1}</strong> / {numQuestions}
-        </p>
-
-        <p>
-          <strong>{points}</strong> / {maxPossiblePoints}
-        </p>
+    <div className="w-full">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+        <div className="text-lg font-medium">
+          Question {index + 1} of {numQuestions}
+        </div>
+        <div className="text-lg font-medium bg-slate-700/50 px-4 py-2 rounded-lg">
+          {points} / {maxPossiblePoints} points
+        </div>
       </div>
-    </header>
+      
+      {/* Progress bar container */}
+      <div className="w-full bg-slate-600/30 rounded-full h-3 md:h-4 overflow-hidden">
+        <div 
+          className="bg-gradient-to-r from-blue-500 to-purple-500 h-full rounded-full transition-all duration-300"
+          style={{ width: `${((index + 1) / numQuestions) * 100}%` }}
+        />
+      </div>
+    </div>
   );
 }

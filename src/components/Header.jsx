@@ -1,9 +1,12 @@
 export default function Header() {
   return (
-    <header className="flex items-center justify-center gap-[20px] mt-[20px]">
-      <img src="React.png" alt="react logo" className="w-[8rem]" />
-      <h1 className="font-display text-[2rem]">The React Quize</h1>
+    <header className="text-center mb-8 md:mb-12">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+        QuizMaster Pro
+      </h1>
+      <p className="text-slate-300 text-base md:text-lg">
+        Test your knowledge with interactive quizzes
+      </p>
     </header>
   );
 }
- 

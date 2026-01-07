@@ -1,22 +1,43 @@
-export default function Nextbutton({ dispatch, answer, index, numQuestions }) {
+export default function Nextbutton({ dispatch, answer, numQuestions, index }) {
   if (answer === null) return null;
-  if (index < numQuestions - 1)
+
+  if (index < numQuestions - 1) {
     return (
       <button
-        className="bg-blue-300 text-black pl-[2rem] pr-[2rem] rounded-lg pt-[5px] pb-[5px] font-googleapis hover:bg-blue-700 hover:text-white cursor-pointer m-[20px]"
+        className="
+          bg-gradient-to-r from-blue-600 to-purple-600 
+          hover:from-blue-700 hover:to-purple-700
+          text-white font-bold 
+          px-6 md:px-8 py-3 md:py-4 
+          rounded-xl
+          text-base md:text-lg
+          transition-all duration-200
+          shadow-lg hover:shadow-xl
+          w-full sm:w-auto
+        "
         onClick={() => dispatch({ type: "nextQuestion" })}
       >
-        Next
+        Next Question →
       </button>
     );
+  }
 
-  if (index === numQuestions - 1)
-    return (
-      <button
-        className="bg-blue-300 text-black pl-[2rem] pr-[2rem] rounded-lg pt-[5px] pb-[5px] font-googleapis hover:bg-blue-700 hover:text-white cursor-pointer m-[20px]"
-        onClick={() => dispatch({ type: "finish" })}
-      >
-        Next
-      </button>
-    );
+  return (
+    <button
+      className="
+        bg-gradient-to-r from-green-600 to-emerald-600 
+        hover:from-green-700 hover:to-emerald-700
+        text-white font-bold 
+        px-6 md:px-8 py-3 md:py-4 
+        rounded-xl
+        text-base md:text-lg
+        transition-all duration-200
+        shadow-lg hover:shadow-xl
+        w-full sm:w-auto
+      "
+      onClick={() => dispatch({ type: "finish" })}
+    >
+      Finish Quiz 🏆
+    </button>
+  );
 }

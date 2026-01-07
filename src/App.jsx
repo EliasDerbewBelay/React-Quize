@@ -103,57 +103,84 @@ export default function App() {
   );
 
   useEffect(function () {
-    fetch("http://localhost:5000/questions")
+    fetch("/questions.json")
       .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
+      .then((data) =>
+        dispatch({ type: "dataReceived", payload: data.questions })
+      )
       .catch((err) => dispatch({ type: "dataFailed" }));
   }, []);
 
   return (
-    <div className="flex flex-col items-center bg-slate-700 w-full h-screen text-white">
-      <Header />
-      <Main>
-        {status === "loading" && <Loader />}
-        {status === "error" && <Error />}
-        {status === "ready" && (
-          <Ready numQuestions={numberOfQuestions} dispatch={dispatch} />
-        )}
-        {status === "active" && (
-          <div className="flex flex-col">
-            <Progress
-              index={index}
-              numQuestions={numberOfQuestions}
-              points={points}
-              maxPossiblePoints={maxPossiblePoints}
-              answer={answer}
-            />
-            <Questions
-              question={questions[index]}
-              dispatch={dispatch}
-              answer={answer}
-            />
+    <div className="min-h-screen bg-slate-700 text-white">
+      <div className="container mx-auto px-4 py-8 md:py-12">
+        <Header />
+        
+        <Main>
+          {status === "loading" && (
+            <div className="flex justify-center items-center min-h-[60vh]">
+              <Loader />
+            </div>
+          )}
+          
+          {status === "error" && (
+            <div className="flex justify-center items-center min-h-[60vh]">
+              <Error />
+            </div>
+          )}
+          
+          {status === "ready" && (
+            <div className="max-w-4xl mx-auto">
+              <Ready numQuestions={numberOfQuestions} dispatch={dispatch} />
+            </div>
+          )}
+          
+          {status === "active" && (
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-slate-800/50 rounded-2xl p-4 md:p-8 shadow-2xl">
+                <Progress
+                  index={index}
+                  numQuestions={numberOfQuestions}
+                  points={points}
+                  maxPossiblePoints={maxPossiblePoints}
+                  answer={answer}
+                />
+                
+                <div className="mt-8 md:mt-12">
+                  <Questions
+                    question={questions[index]}
+                    dispatch={dispatch}
+                    answer={answer}
+                  />
+                </div>
 
-            <footer className="flex items-center justify-between">
-              <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
-              <Nextbutton
+                <footer className="mt-8 md:mt-12 pt-6 border-t border-slate-600/50">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
+                    <Nextbutton
+                      dispatch={dispatch}
+                      answer={answer}
+                      numQuestions={numberOfQuestions}
+                      index={index}
+                    />
+                  </div>
+                </footer>
+              </div>
+            </div>
+          )}
+
+          {status === "finished" && (
+            <div className="max-w-4xl mx-auto">
+              <Finish
+                points={points}
+                maxPossiblePoints={maxPossiblePoints}
+                highscore={highscore}
                 dispatch={dispatch}
-                answer={answer}
-                numQuestions={numberOfQuestions}
-                index={index}
               />
-            </footer>
-          </div>
-        )}
-
-        {status === "finished" && (
-          <Finish
-            points={points}
-            maxPossiblePoints={maxPossiblePoints}
-            highscore={highscore}
-            dispatch={dispatch}
-          />
-        )}
-      </Main>
+            </div>
+          )}
+        </Main>
+      </div>
     </div>
   );
 }
